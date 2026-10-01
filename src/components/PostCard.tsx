@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import { formatCount, formatDate, postUrl, type Post } from "@/data/content";
 import { record } from "@/lib/activity";
+import { useFirstFrame } from "@/lib/useFirstFrame";
 import { useInViewPlayback } from "@/lib/useInViewPlayback";
 import { ArrowUpRight, Heart, Reply } from "./icons";
 import styles from "./PostCard.module.css";
@@ -16,6 +17,7 @@ type Props = {
 
 export function PostCard({ post, featured = false, flipped = false }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const ready = useFirstFrame(videoRef);
   useInViewPlayback(videoRef);
   const { media } = post;
 
@@ -32,16 +34,19 @@ export function PostCard({ post, featured = false, flipped = false }: Props) {
     >
       <div className={styles.media} data-kind={media.kind}>
         {media.kind === "video" ? (
-          <video
-            ref={videoRef}
-            src={media.src}
-            poster={media.poster}
-            muted
-            loop
-            playsInline
-            preload="none"
-            aria-hidden="true"
-          />
+          <>
+            <Image src={media.poster} alt="" fill unoptimized loading="eager" draggable={false} />
+            <video
+              ref={videoRef}
+              src={media.src}
+              data-ready={ready || undefined}
+              muted
+              loop
+              playsInline
+              preload="none"
+              aria-hidden="true"
+            />
+          </>
         ) : (
           <Image src={media.cover} alt="" fill draggable={false} sizes="(max-width: 900px) 100vw, 360px" />
         )}

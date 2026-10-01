@@ -38,6 +38,17 @@
   transition: transform 0.9s var(--ease-out);
 }
 
+.media video {
+  opacity: 0;
+  transition:
+    transform 0.9s var(--ease-out),
+    opacity 0.2s;
+}
+
+.media video[data-ready] {
+  opacity: 1;
+}
+
 .card:hover .media video,
 .card:hover .media img {
   transform: scale(1.025);
