@@ -1,0 +1,80 @@
+.footer {
+  position: relative;
+  padding-top: clamp(112px, 16vw, 184px);
+  overflow: hidden;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.flower {
+  width: 148px;
+  height: 148px;
+}
+
+.message {
+  min-height: 1.4em;
+  margin-top: 18px;
+  color: var(--ink-2);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  font-size: 21px;
+  animation: messageIn 0.4s var(--ease-out);
+}
+
+.stack[data-done] .message {
+  color: var(--rose);
+}
+
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.big {
+  max-width: 13em;
+  margin-top: clamp(28px, 4vw, 40px);
+  font-family: var(--font-serif);
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+  font-weight: 450;
+  font-size: clamp(38px, 6.4vw, 76px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.big em {
+  font-style: italic;
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  color: var(--ink-2);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 36px;
+}
+
+.stack[data-done] .follow {
+  animation: nudge 0.9s var(--ease-spring) 2;
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: none;
+  }
+  30% {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 14px 30px -10px rgba(217, 87, 143, 0.55);
+  }
+}

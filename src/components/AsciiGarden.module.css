@@ -1,0 +1,23 @@
+.garden {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(56px, 8vw, 96px);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.art {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 0.94vw, 13.5px);
+  font-weight: 600;
+  line-height: 1.1;
+  white-space: pre;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+.art [data-dim] {
+  opacity: 0.42;
+}
