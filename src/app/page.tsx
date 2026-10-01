@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Highlights } from "@/components/Highlights";
 import { LittleThings } from "@/components/LittleThings";
+import { Overlay } from "@/components/Overlay";
 import { WorkedWith } from "@/components/WorkedWith";
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
       </main>
       <Footer />
       <LittleThings />
+      <Overlay />
     </>
   );
 }

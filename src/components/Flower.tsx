@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import { record } from "@/lib/activity";
 import { centerMarkup, defsMarkup, flowerInnerMarkup, PETAL_COUNT, petalMarkup, petals } from "./flower-art";
 import styles from "./Flower.module.css";
 
@@ -109,6 +110,7 @@ export function PluckableFlower({ className, regrowDelay = 2000, onPluck }: Pluc
     }
 
     drop(pick);
+    record(2, pick);
     const next = [...plucked, pick];
     setPlucked(next);
     onPluck?.(next.length);

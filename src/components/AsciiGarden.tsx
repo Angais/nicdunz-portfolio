@@ -1,6 +1,7 @@
 "use client";
 
 import { memo, useEffect, useRef, useState, type MouseEvent, type PointerEvent } from "react";
+import { record } from "@/lib/activity";
 import { ART, BACK, BASAL, FILL, FRONT, HEIGHT, PALETTES, type Species } from "./ascii-flowers";
 import styles from "./AsciiGarden.module.css";
 
@@ -372,6 +373,7 @@ export function AsciiGarden() {
     if (!options.length) return;
     target.species = options[Math.floor(Math.random() * options.length)];
     target.palette = Math.floor(Math.random() * PALETTES[target.species].length);
+    record(1, states.current.indexOf(target));
     if (still.current) publish();
     else target.glitchEnd = performance.now() + REGROW_GLITCH_MS;
   };
@@ -383,6 +385,7 @@ export function AsciiGarden() {
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
       onClick={onClick}
+      data-garden
       aria-hidden="true"
     >
       <div ref={artRef} className={styles.art}>

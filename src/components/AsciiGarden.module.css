@@ -1,4 +1,5 @@
 .garden {
+  position: relative;
   display: flex;
   justify-content: center;
   margin-top: clamp(56px, 8vw, 96px);

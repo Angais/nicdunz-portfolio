@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { formatCount, formatDate, postUrl, type Post } from "@/data/content";
+import { record } from "@/lib/activity";
 import { useInViewPlayback } from "@/lib/useInViewPlayback";
 import { ArrowUpRight, Heart, Reply } from "./icons";
 import styles from "./PostCard.module.css";
@@ -25,6 +26,7 @@ export function PostCard({ post, featured = false, flipped = false }: Props) {
       rel="noopener noreferrer"
       className={styles.card}
       draggable={false}
+      onClick={() => record(3)}
       data-featured={featured || undefined}
       data-flipped={flipped || undefined}
     >
