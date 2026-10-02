@@ -1,0 +1,68 @@
+.email {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  font-family: var(--font-serif);
+  font-size: clamp(40px, 8vw, 104px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+  text-shadow: var(--on-sky);
+}
+
+.email::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15em;
+  height: 0.035em;
+  min-height: 2px;
+  border-radius: 999px;
+  background: var(--dusk);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.email:hover::after,
+.email:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: clamp(24px, 3.4vw, 36px);
+}
+
+.copy {
+  display: inline-grid;
+}
+
+.copy > span {
+  display: inline-flex;
+  grid-area: 1 / 1;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  transition:
+    opacity 0.2s,
+    transform 0.35s var(--ease-out);
+}
+
+.copy > span:last-child,
+.copy[data-copied] > span:first-child {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.copy[data-copied] > span:first-child {
+  transform: translateY(-6px);
+}
+
+.copy[data-copied] > span:last-child {
+  opacity: 1;
+  transform: none;
+}

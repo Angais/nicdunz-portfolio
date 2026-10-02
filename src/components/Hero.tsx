@@ -1,68 +1,54 @@
-import Image from "next/image";
 import { profile } from "@/data/content";
-import banner from "../../public/banner.jpg";
-import frame from "./BannerFrame.module.css";
-import { BannerVideo } from "./BannerVideo";
-import { PluckableFlower } from "./Flower";
+import { Avatar } from "./Avatar";
 import { Logo } from "./Logo";
-import { ScrollCue } from "./ScrollCue";
 import styles from "./Hero.module.css";
 
 export function Hero() {
   return (
-    <section className={styles.hero}>
-      <div className={styles.bannerWrap}>
-        <div className={`${styles.glow} ${frame.frame}`} aria-hidden="true" />
-        <div className={`${styles.banner} ${frame.frame}`}>
-          <Image
-            src={banner}
-            alt="“AI News and Opinions” spelled out in flowers above a field by the sea"
-            fill
-            preload
-            draggable={false}
-            sizes="(max-width: 1184px) 100vw, 1120px"
-          />
-          <BannerVideo className={styles.bannerVideo} />
-        </div>
-      </div>
+    <section id="top" className={styles.hero}>
+      <div className={styles.inner}>
+        <Avatar name={profile.name} />
 
-      <div className={styles.identity}>
-        <div className={styles.avatar}>
-          <Image
-            src="/avatar.jpg"
-            alt="Angel"
-            width={1024}
-            height={1024}
-            preload
-            draggable={false}
-            quality={90}
-            sizes="(max-width: 640px) 90px, 250px"
-          />
-        </div>
-        <div className={styles.actions}>
-          <a className="btn btn-ghost" href="#work">
-            Work with me
+        <h1 className={styles.name}>{profile.name}</h1>
+
+        <p className={styles.tagline}>
+          {profile.tagline}
+          <span className={styles.dot} aria-hidden="true" />
+          Community Lead at{" "}
+          <a className={styles.krea} href={profile.krea} target="_blank" rel="noopener noreferrer">
+            <Logo name="krea" size={15} />
+            Krea
           </a>
-          <a className="btn btn-primary" href={profile.followUrl} target="_blank" rel="noopener noreferrer">
+        </p>
+
+        <div className={styles.actions}>
+          <a className="btn btn-light" href={profile.followUrl} target="_blank" rel="noopener noreferrer">
             <Logo name="x" size={14} />
             Follow
             <span className={styles.count}>{profile.followers}</span>
           </a>
+          <a className="btn btn-glass btn-icon" href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <Logo name="github" size={18} />
+          </a>
+          <a className="btn btn-glass btn-icon" href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <Logo name="linkedin" size={17} />
+          </a>
         </div>
       </div>
 
-      <h1 id="hero-name" className={styles.name}>
-        {profile.name}
-        <PluckableFlower className={styles.flower} regrowDelay={1600} />
-      </h1>
-      <p className={styles.handle}>@{profile.handle}</p>
-
-      <p className={styles.tagline}>
-        I post AI news, opinions, and hands-on tests of new models. Usually by asking them to build
-        something <em>way too ambitious.</em>
-      </p>
-
-      <ScrollCue to="highlights" />
+      <a href="#highlights" className={styles.cue} aria-label="Scroll down">
+        <svg viewBox="0 0 40 24" width="40" height="24" aria-hidden="true">
+          <defs>
+            <clipPath id="cue-horizon">
+              <rect width="40" height="17" />
+            </clipPath>
+          </defs>
+          <g clipPath="url(#cue-horizon)">
+            <circle className={styles.cueSun} cx="20" cy="12" r="6" />
+          </g>
+          <path d="M4 17h32" />
+        </svg>
+      </a>
     </section>
   );
 }

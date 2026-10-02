@@ -1,26 +1,32 @@
-import { about, profile } from "@/data/content";
-import { CopyEmail } from "./AboutBits";
+import { profile } from "@/data/content";
+import { Logo } from "./Logo";
 import styles from "./About.module.css";
 
 export function About() {
-  const [first, second] = about.studies;
-
   return (
-    <section id="about" className="container section">
+    <section id="about" className="container section" data-sky="0.4">
       <div className="section-head">
-        <h2 className="section-title">
-          About <em>me</em>
-        </h2>
+        <h2 className="section-title">About</h2>
       </div>
 
       <p className={styles.bio}>
-        I’m <strong>{about.name}</strong>, a <strong>{about.age}-year-old</strong> from{" "}
-        <strong className={styles.spain}>{about.country}</strong>. I studied <strong>{first}</strong> and{" "}
-        <strong>{second}</strong>, and now I put new AI models to the test.
+        I’m Nic, 20, from Florida. I’m the Community Lead at{" "}
+        <a className={styles.krea} href={profile.krea} target="_blank" rel="noopener noreferrer">
+          <Logo name="krea" size={26} />
+          Krea
+        </a>
+        , I study computer science at Florida Tech, and I spend the rest of my time trying new models and posting what I find.
       </p>
 
-      <div className={styles.contact}>
-        <CopyEmail email={profile.email} />
+      <div className={styles.links}>
+        <a className="btn btn-glass" href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+          <Logo name="linkedin" size={16} />
+          LinkedIn
+        </a>
+        <a className="btn btn-glass" href={profile.github} target="_blank" rel="noopener noreferrer">
+          <Logo name="github" size={17} />
+          GitHub
+        </a>
       </div>
     </section>
   );

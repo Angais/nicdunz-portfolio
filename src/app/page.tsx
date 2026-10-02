@@ -1,28 +1,27 @@
 import { About } from "@/components/About";
+import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Highlights } from "@/components/Highlights";
 import { LittleThings } from "@/components/LittleThings";
-import { Overlay } from "@/components/Overlay";
-import { WorkedWith } from "@/components/WorkedWith";
+import { Projects } from "@/components/Projects";
+import { Sky } from "@/components/Sky";
 
 export default function Home() {
   return (
     <>
-      <div className="atmosphere" aria-hidden="true" />
+      <Sky />
       <Header />
-      <main id="top">
-        <div className="container">
-          <Hero />
-        </div>
+      <main>
+        <Hero />
         <Highlights />
         <About />
-        <WorkedWith />
+        <Projects />
+        <Contact />
       </main>
       <Footer />
       <LittleThings />
-      <Overlay />
     </>
   );
 }

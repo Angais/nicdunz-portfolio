@@ -1,0 +1,83 @@
+.wrap {
+  position: relative;
+}
+
+.avatar {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: clamp(92px, 11vw, 124px);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: none;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.4),
+    0 22px 48px -18px rgba(30, 40, 110, 0.6);
+  transition:
+    transform 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.avatar:hover {
+  transform: scale(1.03);
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.55),
+    0 26px 52px -18px rgba(30, 40, 110, 0.65);
+}
+
+.avatar:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 6px;
+}
+
+.avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Crows start at the centre, hidden behind the photo. */
+.flock {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+}
+
+.crow {
+  position: absolute;
+  top: -12px;
+  left: -17px;
+  width: 34px;
+  height: 24px;
+  will-change: transform, opacity;
+}
+
+.crow svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: #1b1f30;
+}
+
+.wing {
+  transform-box: view-box;
+  transform-origin: 21px 19.5px;
+  animation: flap var(--flap, 0.18s) ease-in-out infinite alternate;
+}
+
+@keyframes flap {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(-0.75);
+  }
+}

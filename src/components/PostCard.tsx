@@ -2,23 +2,51 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { formatCount, formatDate, postUrl, type Post } from "@/data/content";
-import { record } from "@/lib/activity";
+import { formatDate, postUrl, type Post } from "@/data/content";
 import { useFirstFrame } from "@/lib/useFirstFrame";
 import { useInViewPlayback } from "@/lib/useInViewPlayback";
-import { ArrowUpRight, Heart, Reply } from "./icons";
+import { ArrowUpRight } from "./icons";
+import { Logo } from "./Logo";
 import styles from "./PostCard.module.css";
 
-type Props = {
-  post: Post;
-  featured?: boolean;
-  flipped?: boolean;
-};
+function Video({ src, poster }: { src: string; poster: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const ready = useFirstFrame(ref);
+  useInViewPlayback(ref);
 
-export function PostCard({ post, featured = false, flipped = false }: Props) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const ready = useFirstFrame(videoRef);
-  useInViewPlayback(videoRef);
+  return (
+    <div className={styles.media}>
+      <Image src={poster} alt="" fill unoptimized draggable={false} />
+      <video ref={ref} src={src} data-ready={ready || undefined} muted loop playsInline preload="none" aria-hidden="true" />
+    </div>
+  );
+}
+
+function Text({ text, mark }: { text: string; mark?: string }) {
+  if (!mark || !text.includes(mark)) return text;
+  const [before, after] = text.split(mark);
+  return (
+    <>
+      {before}
+      <mark className={styles.mark}>{mark}</mark>
+      {after}
+    </>
+  );
+}
+
+function Meta({ date }: { date: string }) {
+  return (
+    <div className={styles.meta}>
+      <Logo name="x" size={12} />
+      <time dateTime={date}>{formatDate(date)}</time>
+      <span className={styles.open} aria-hidden="true">
+        <ArrowUpRight size={15} />
+      </span>
+    </div>
+  );
+}
+
+export function PostCard({ post, className = "" }: { post: Post; className?: string }) {
   const { media } = post;
 
   return (
@@ -26,65 +54,61 @@ export function PostCard({ post, featured = false, flipped = false }: Props) {
       href={postUrl(post.id)}
       target="_blank"
       rel="noopener noreferrer"
-      className={styles.card}
+      className={`${styles.card} ${className}`}
+      data-kind={media.kind}
+      data-card
       draggable={false}
-      onClick={() => record(3)}
-      data-featured={featured || undefined}
-      data-flipped={flipped || undefined}
     >
-      <div className={styles.media} data-kind={media.kind}>
-        {media.kind === "video" ? (
-          <>
-            <Image src={media.poster} alt="" fill unoptimized loading="eager" draggable={false} />
-            <video
-              ref={videoRef}
-              src={media.src}
-              data-ready={ready || undefined}
-              muted
-              loop
-              playsInline
-              preload="none"
-              aria-hidden="true"
-            />
-          </>
-        ) : (
-          <Image src={media.cover} alt="" fill draggable={false} sizes="(max-width: 900px) 100vw, 360px" />
-        )}
-      </div>
+      {media.kind === "photo" && (
+        <>
+          <Image
+            className={styles.photo}
+            src={media.src}
+            alt={media.alt}
+            fill
+            sizes="(max-width: 860px) 100vw, 460px"
+            draggable={false}
+          />
+          <div className={styles.caption}>
+            {post.where && <span className={styles.kicker}>{post.where}</span>}
+            <p className={styles.said}>{post.text}</p>
+            <Meta date={post.date} />
+          </div>
+        </>
+      )}
 
-      <div className={styles.body}>
-        {media.kind === "article" ? (
-          <>
+      {media.kind === "video" && (
+        <>
+          <Video src={media.src} poster={media.poster} />
+          <div className={styles.body}>
+            <p className={styles.text}>{post.text}</p>
+            <Meta date={post.date} />
+          </div>
+        </>
+      )}
+
+      {media.kind === "article" && (
+        <>
+          <div className={styles.media} data-cover>
+            <Image src={media.cover} alt="" fill sizes="(max-width: 860px) 100vw, 560px" draggable={false} />
+          </div>
+          <div className={styles.body}>
             <span className={styles.kicker}>Article</span>
             <h3 className={styles.title}>{media.title}</h3>
-            <p className={styles.text}>{media.preview}</p>
-          </>
-        ) : (
-          <p className={styles.text}>{post.text}</p>
-        )}
-
-        <div className={styles.meta}>
-          <ul className={styles.tags}>
-            {post.tags.map((tag) => (
-              <li key={tag}>{tag}</li>
-            ))}
-          </ul>
-          <div className={styles.stats}>
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-            <span className={styles.likes}>
-              <Heart /> {formatCount(post.likes)}
-            </span>
-            <span className={styles.replies}>
-              <Reply /> {formatCount(post.replies)}
-            </span>
+            <p className={styles.preview}>{media.preview}</p>
+            <Meta date={post.date} />
           </div>
-        </div>
-      </div>
+        </>
+      )}
 
-      <span className={styles.open} aria-hidden="true">
-        <ArrowUpRight size={16} />
-      </span>
-      <span className="visually-hidden">View on X</span>
+      {media.kind === "quote" && (
+        <div className={styles.body}>
+          <p className={styles.quote}>
+            <Text text={post.text} mark={post.mark} />
+          </p>
+          <Meta date={post.date} />
+        </div>
+      )}
     </a>
   );
 }
